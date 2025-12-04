@@ -30,12 +30,12 @@ const login = asyncHandler(async (req, res, next) => {
   let token = await generateToken(user._id);
   console.log(token);
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    // sameSite: true,
-    // secure: true,
-    maxAge: 60 * 60 * 1000, // 1 hour
-  });
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,           // true for https deployment (Render)
+  sameSite: "none",       // REQUIRED for cross-origin cookies
+  maxAge: 60 * 60 * 1000,
+});
 
   res.status(200).json({
     success: true,
